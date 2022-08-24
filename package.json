@@ -1,7 +1,7 @@
 {
   "name": "powerfull",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Mayowa <mayority11@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -15,5 +15,9 @@
   "type": "module",
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "engines": {
+    "yarn": "1.22.19",
+    "node": "16.13.2"
   }
 }

@@ -25,6 +25,17 @@ app.get('/with-params', (req, res, next) => {
   })
 })
 
+app.post('/for-posts', (req, res, next) => {
+  let params = req.query
+  let body = req.body
+
+  res.status(200).json({
+    status: 200,
+    parameters: params,
+    body,
+  })
+})
+
 app.get('/', (req, res, next) => {
   res.status(200).json({
     to_whom: 'Albright',
