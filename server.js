@@ -48,15 +48,20 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/set-command", async (req, res, next) => {
-  const { command, meterNo } = req.query;
+  const { cmd, meterNumber, SODNumber, broadcastAddress } = req.query;
   try {
     let response = await CommandModel.findOneAndUpdate(
-      { meterNo },
-      { command },
+      { meterNumber },
+      { cmd, SODNumber, broadcastAddress },
       { new: true, runValidators: true }
     );
     if (!response) {
-      response = await CommandModel.create({ command, meterNo });
+      response = await CommandModel.create({
+        cmd,
+        meterNumber,
+        SODNumber,
+        broadcastAddress,
+      });
     }
     res.status(200).json({ response });
   } catch (e) {
@@ -65,10 +70,13 @@ app.get("/set-command", async (req, res, next) => {
 });
 
 app.get("/get-command", async (req, res, next) => {
-  const { meterNo } = req.query;
+  const { meterNumber } = req.query;
   try {
-    const command = await CommandModel.findOne({ meterNo });
-    res.status(200).json({ command });
+    const response = await CommandModel.findOne({ meterNumber });
+    if (!response) {
+      return res.status(404).send("No command");
+    }
+    res.status(200).send(response.command);
   } catch (e) {
     next(e);
   }
