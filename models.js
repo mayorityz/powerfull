@@ -19,7 +19,7 @@ const CommandSchema = new mongoose.Schema(
       type: String,
     },
     meterResponse: {
-      type: [String],
+      type: String,
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
