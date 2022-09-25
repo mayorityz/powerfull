@@ -107,7 +107,9 @@ app.get("/get-command-details", async (req, res, next) => {
       return res.status(404).json({ message: "No info found for this meter" });
     }
     res.status(200).json(response);
-  } catch (e) {}
+  } catch (e) {
+    next(e);
+  }
 });
 
 app.use((req, res, next) => {
