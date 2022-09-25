@@ -82,6 +82,34 @@ app.get("/get-command", async (req, res, next) => {
   }
 });
 
+app.get("/set-reply", async (req, res, next) => {
+  const { reply, meterNumber } = req.query;
+  try {
+    const response = await CommandModel.findOneAndUpdate(
+      { meterNumber },
+      { meterResponse: reply },
+      { new: true, runValidators: true }
+    );
+    if (!response) {
+      return res.status(404).send("No command was set for this meter");
+    }
+    res.status(200).send("Success");
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.get("/get-command-details", async (req, res, next) => {
+  const { meterNumber } = req.query;
+  try {
+    const response = await CommandModel.findOne({ meterNumber });
+    if (!response) {
+      return res.status(404).json({ message: "No info found for this meter" });
+    }
+    res.status(200).json(response);
+  } catch (e) {}
+});
+
 app.use((req, res, next) => {
   res.status(404).send("Sorry can't find that!");
 });
